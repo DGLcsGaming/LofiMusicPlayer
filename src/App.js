@@ -35,7 +35,7 @@ function App() {
       var pos = (e.offsetX / progressBarRef.current.clientWidth) * audio.duration;
       audio.currentTime = pos;
     });
-  }, []);
+  }, [audio]);
 
   useEffect(() => {
     audio.src = songs[currentSongIndex].source;
@@ -43,11 +43,11 @@ function App() {
     audio.load();
     audio.play();
     setIsPlaying(true);
-  }, [currentSongIndex]);
+  }, [currentSongIndex, audio]);
 
   useEffect(() => {
     isPlaying ? audio.play() : audio.pause();
-  }, [isPlaying]);
+  }, [isPlaying, audio]);
 
   const handlePlayPause = () => {
     setIsPlaying((playing) => !playing);
@@ -64,7 +64,7 @@ function App() {
       <video autoPlay muted loop id="backgroundVideo" className="fixed w-screen h-screen top-0 left-0 object-cover">
         <source src={lofi_background} type="video/mp4" />
       </video>
-      <div className="fixed w-1/2 mb-8 bg-gradient-to-br from-purple-400 bg-opacity-10 rounded-2xl py-10 px-12 flex justify-between items-center shadow-lg text-white backdrop-filter backdrop-blur-sm">
+      <div className="fixed w-1/2 mb-2 bg-gradient-to-br from-purple-400 bg-opacity-10 rounded-2xl py-4 px-12 flex justify-between items-center shadow-lg text-white backdrop-filter backdrop-blur-sm">
         <div
           className="lofi-circle w-28 h-28 bg-white rounded-full border-4 border-white bg-cover bg-no-repeat bg-center "
           style={{ backgroundImage: `url(${lofi_girl})`, animationPlayState: isPlaying ? "running" : "paused" }}></div>
